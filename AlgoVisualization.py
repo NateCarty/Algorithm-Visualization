@@ -52,7 +52,18 @@ class AlgoVisualization(tk.Tk):
         frame = self.frames[curr]
         frame.tkraise()
             
+class homePage(tk.Frame):
 
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="Home Page")
+        label.pack(pady=10, padx=10)
+
+        button = ttk.Button(self, text ="Sort",
+                            command=lambda: controller.show_frame(graphPage))
+        button.pack()
+
+        
 class graphPage(tk.Frame):
 
     def __init__(self, parent, controller):
