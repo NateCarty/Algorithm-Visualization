@@ -111,11 +111,16 @@ class Window(tk.Frame):
         self.axis = self.fig.add_subplot(111)
         self.rectangles = self.axis.bar(np.arange(0, self.elementNumber, 1), self.intArray, align = "edge")
 
+        # configure bar chart looks
+        self.axis.set_xlim([0, self.elementNumber])
+        self.axis.set(title = f"{self.currentAlgorithm}")
+        self.axis.set_xticks([])
+        
         # add and draw FigureCanvas
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack()
-        
+
     # function when start button is pressed
     def on_start(self):
         return
