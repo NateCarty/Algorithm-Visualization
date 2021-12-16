@@ -145,6 +145,17 @@ class Window(tk.Frame):
         if self.animation is None:
             return self.start()
 
+        # if animation is running, pause it
+        if self.running:
+            self.animation.event_source.stop()
+            self.button.config(text="Un-Pause")
+        
+        # else, animation is pause, unpause it
+        else:
+            self.animation.event_source.start()
+            self.button.config(text="Pause")
+
+        self.running = not self.running
     # funtion when reset button is pressed
     def on_reset(self):
         return
