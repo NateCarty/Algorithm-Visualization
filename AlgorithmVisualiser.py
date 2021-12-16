@@ -249,6 +249,7 @@ class Window(tk.Frame):
         try:
             for rectangle, height in zip(self.rectangles.patches, self.intArray.fullCopies[frame]):
                 rectangle.set_height(height)
+                rectangle.set_color("#%02x%02x%02x" % self.element_to_rgb(height, self.getRGB()))
             return (*self.rectangles,)
         except:
             print("Animation interrupted.")
