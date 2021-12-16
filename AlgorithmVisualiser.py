@@ -163,6 +163,7 @@ class Window(tk.Frame):
     # function that checks the current algorithm and sorts array accordingly
     def arraySorter(self):
         if self.currentAlgorithm == "Insertion":
+
             i = 1
             while i < len(self.intArray):
                 j = i
@@ -170,6 +171,14 @@ class Window(tk.Frame):
                     self.intArray[j], self.intArray[j - 1] = self.intArray[j - 1], self.intArray[j]
                     j -= 1
                 i += 1
+
+        elif self.currentAlgorithm == "Selection":
+            for i in range(len(self.intArray)):
+                minIndex = i
+                for j in range(i+1, len(self.intArray)):
+                    if self.intArray[minIndex] > self.intArray[j]:
+                        minIndex = j   
+                self.intArray[i], self.intArray[minIndex] = self.intArray[minIndex], self.intArray[i]
 
     # function when start button is pressed
     def on_start(self):
