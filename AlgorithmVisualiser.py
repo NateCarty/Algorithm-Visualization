@@ -115,7 +115,8 @@ class Window(tk.Frame):
         self.axis.set_xlim([0, self.elementNumber])
         self.axis.set(title = f"{self.currentAlgorithm}")
         self.axis.set_xticks([])
-        
+        self.axis.set_ylim(0,1000)
+
         # add and draw FigureCanvas
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)
         self.canvas.draw()
