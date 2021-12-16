@@ -15,11 +15,11 @@ class Window(tk.Frame):
         self.colorSelector.pack(side=tk.LEFT)
         self.colorSelector.config(bg="#add8e6", activebackground="#6fbbd3", highlightbackground="white")
 
-        self.currentAlgo = StringVar()
-        self.currentAlgo.set("Insertion")
-        self.selector = OptionMenu(buttonFrame, self.currentAlgo, "Insertion", "Selection", "Bubble", "Quick Sort", "Heap")
-        self.selector.pack(side=tk.LEFT)
-        self.selector.config(bg="#add8e6", activebackground="#6fbbd3", highlightbackground="white")
+        self.algoSelectorVar = StringVar()
+        self.algoSelectorVar.set("Insertion")
+        self.algoSelector = OptionMenu(buttonFrame, self.algoSelectorVar, "Insertion", "Selection", "Bubble", "Quick Sort", "Heap")
+        self.algoSelector.pack(side=tk.LEFT)
+        self.algoSelector.config(bg="#add8e6", activebackground="#6fbbd3", highlightbackground="white")
 
 
 
