@@ -4,6 +4,9 @@ from tkinter import StringVar
 
 import numpy as np
 
+from matplotlib import pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
 class ArrayTracker():
 
     # initialize by making an array copy and resetting values
@@ -43,6 +46,21 @@ class Window(tk.Frame):
     def __init__(self, master = None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
 
+        
+        # variables
+        self.elementNumber = 25
+        self.currentAlgorithm = "Insertion"
+
+        # create an array of elements evenly spaced out from 1 to 1000, rounded
+        intArray = np.round(np.linspace(4, 1000, self.elementNumber))
+
+        # randomly shuffle array in place
+        np.random.shuffle(intArray)
+
+        # need a class to track our array being sorted
+        self.intArray = ArrayTracker(intArray)
+
+        # tkinter frame for our button menu
         buttonFrame = tk.Frame(self)
         buttonFrame.pack()
 
@@ -86,20 +104,18 @@ class Window(tk.Frame):
         self.resetButton.pack(side=tk.LEFT)
         self.resetButton.config(bg="#add8e6", activebackground="#6fbbd3")
 
-        # variables
-        self.elementNumber = 25
-        self.currentAlgorithm = "Insertion"
+        # create our matplotlib figure
+        self.fig = plt.Figure(figsize=(10, 6))
+        
+        # add bar chart with our data
+        self.axis = self.fig.add_subplot(111)
+        self.rectangles = self.axis.bar(np.arange(0, self.elementNumber, 1), self.intArray, align = "edge")
 
-        # create an array of elements evenly spaced out from 1 to 1000, rounded
-        intArray = np.round(np.linspace(4, 1000, self.elementNumber))
-
-        # randomly shuffle array in place
-        np.random.shuffle(intArray)
-
-        # need a class to track our array being sorted
-        self.intArray = ArrayTracker(intArray)
-
-
+        # add and draw FigureCanvas
+        self.canvas = FigureCanvasTkAgg(self.fig, master=self)
+        self.canvas.draw()
+        self.canvas.get_tk_widget().pack()
+        
     # function when start button is pressed
     def on_start(self):
         return
