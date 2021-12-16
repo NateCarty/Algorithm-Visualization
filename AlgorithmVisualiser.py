@@ -52,6 +52,7 @@ class Window(tk.Frame):
         self.elementNumber = 25
         self.currentAlgorithm = "Insertion"
         self.animation = None
+        self.currentColor = "Green"
 
         # create an array of elements evenly spaced out from 1 to 1000, rounded
         intArray = np.round(np.linspace(4, 1000, self.elementNumber))
@@ -118,11 +119,44 @@ class Window(tk.Frame):
         self.axis.set(title = f"{self.currentAlgorithm}")
         self.axis.set_xticks([])
         self.axis.set_ylim(0,1000)
+        for rectangle in self.rectangles.patches:
+            rectangle.set_color("#%02x%02x%02x" % self.element_to_rgb(rectangle.get_height(), self.getRGB()))
 
         # add and draw FigureCanvas
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack()
+
+    # function that takes a height element and returns correct color 
+    # to spread color over interval based on height
+    def element_to_rgb(self, element, rgb):
+        minRVal = int(rgb[0] % 10)
+        maxRVal = rgb[0]
+        red = int((element) / 1000 * (maxRVal - minRVal) + minRVal)
+        minGVal = int(rgb[1] % 10)
+        maxGVal = rgb[1]
+        green = int((element) / 1000 * (maxGVal - minGVal) + minGVal)
+        minBVal = int(rgb[2] % 10)
+        maxBVal = rgb[2]
+        blue = int((element) / 1000 * (maxBVal - minBVal) + minBVal)
+        return red, green, blue
+
+    # function that checks current color and returns rgb value
+    def getRGB(self):
+        # "Green", "Yellow", "Purple", "Orange", "Blue", "Red"
+        color = self.currentColor
+        if color == "Green":
+            return [92, 205, 120]
+        elif color == "Yellow":
+            return [239, 255, 0]
+        elif color == "Purple":
+            return [92, 35, 178]
+        elif color == "Orange":
+            return [255, 162, 0]
+        elif color == "Blue":
+            return [0, 43, 255]
+        elif color == "Red":
+            return [255, 0 , 0]
 
     # function that checks the current algorithm and sorts array accordingly
     def arraySorter(self):
