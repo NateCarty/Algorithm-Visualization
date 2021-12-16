@@ -5,6 +5,7 @@ from tkinter import StringVar
 import numpy as np
 
 from matplotlib import pyplot as plt
+from matplotlib import animation as animation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 class ArrayTracker():
@@ -50,6 +51,7 @@ class Window(tk.Frame):
         # variables
         self.elementNumber = 25
         self.currentAlgorithm = "Insertion"
+        self.animation = None
 
         # create an array of elements evenly spaced out from 1 to 1000, rounded
         intArray = np.round(np.linspace(4, 1000, self.elementNumber))
@@ -122,15 +124,57 @@ class Window(tk.Frame):
         self.canvas.draw()
         self.canvas.get_tk_widget().pack()
 
+    # function that checks the current algorithm and sorts array accordingly
+    def arraySorter(self):
+        if self.currentAlgorithm == "Insertion":
+            i = 1
+            while i < len(self.intArray):
+                j = i
+                while j > 0 and self.intArray[j - 1] > self.intArray[j]:
+                    self.intArray[j], self.intArray[j - 1] = self.intArray[j - 1], self.intArray[j]
+                    j -= 1
+                i += 1
+
     # function when start button is pressed
     def on_start(self):
-        return
+
+        # we want to sort the array with the current algorithm
+        self.arraySorter()
+        
+        # if animation is not running, start it
+        if self.animation is None:
+            return self.start()
 
     # funtion when reset button is pressed
     def on_reset(self):
         return
 
-
+    # function called when start is pressed and there is no current animation
+    def start(self):
+        try:
+            self.animation = animation.FuncAnimation(
+                self.fig,
+                self.update_graph,
+                frames = range(len(self.intArray.fullCopies)),
+                interval = int(self.speed.get()),
+                blit = True,
+                repeat = False)
+        except:
+            print("Start animation failed.")
+        self.running = True
+        self.button.config(text = "Pause")
+        self.animation._start()
+    
+    # function called on every frame update
+    def update_graph(self, frame):
+        
+        # look at the state at each frame and update entire graph
+        try:
+            for rectangle, height in zip(self.rectangles.patches, self.intArray.fullCopies[frame]):
+                rectangle.set_height(height)
+            return (*self.rectangles,)
+        except:
+            print("Animation interrupted.")
 
 def main():
 
