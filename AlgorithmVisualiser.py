@@ -179,7 +179,39 @@ class Window(tk.Frame):
                     if self.intArray[minIndex] > self.intArray[j]:
                         minIndex = j   
                 self.intArray[i], self.intArray[minIndex] = self.intArray[minIndex], self.intArray[i]
+        
+        elif self.currentAlgorithm == "Bubble":
+            n = len(self.intArray)
+            for i in range(n):
+                for j in range(0, n-i-1):
+                    if self.intArray[j] > self.intArray[j+1] :
+                        self.intArray[j], self.intArray[j+1] = self.intArray[j+1], self.intArray[j]
 
+        elif self.currentAlgorithm == "Quick Sort":
+            def partition(start, end, array):
+                pivot_index = start 
+                pivot = array[pivot_index]
+
+                while start < end:
+                    while start < len(array) and array[start] <= pivot:
+                        start += 1
+                    while array[end] > pivot:
+                        end -= 1
+                    if(start < end):
+                        array[start], array[end] = array[end], array[start]
+
+                array[end], array[pivot_index] = array[pivot_index], array[end]
+
+                return end
+            
+            def quick_sort(start, end, array):
+                if (start < end):
+                    p = partition(start, end, array)
+                    quick_sort(start, p - 1, array)
+                    quick_sort(p + 1, end, array)
+            
+            quick_sort(0, len(self.intArray) - 1, self.intArray)
+            
     # function when start button is pressed
     def on_start(self):
 
