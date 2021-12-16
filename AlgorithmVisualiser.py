@@ -47,6 +47,7 @@ class Window(tk.Frame):
     def __init__(self, master = None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
 
+        self.config(bg="white")
         
         # variables
         self.elementNumber = 25
@@ -65,6 +66,7 @@ class Window(tk.Frame):
 
         # tkinter frame for our button menu
         buttonFrame = tk.Frame(self)
+        buttonFrame.config(bg="white")
         buttonFrame.pack()
 
 
