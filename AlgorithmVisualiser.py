@@ -40,6 +40,24 @@ class Window(tk.Frame):
         self.speed.insert(0, '5')
         self.speed.pack(side=tk.LEFT)
 
+        # Buttons
+
+        self.button = tk.Button(buttonFrame, text="Start", command = self.on_start)
+        self.button.pack(side=tk.LEFT, padx=10)
+        self.button.config(bg="#add8e6", activebackground="#6fbbd3")
+
+        self.resetButton = tk.Button(buttonFrame, text="Reset", command=self.on_reset)
+        self.resetButton.pack(side=tk.LEFT)
+        self.resetButton.config(bg="#add8e6", activebackground="#6fbbd3")
+
+    # function when start button is pressed
+    def on_start(self):
+        return
+
+    # funtion when reset button is pressed
+    def on_reset(self):
+        return
+
 
 
 def main():
