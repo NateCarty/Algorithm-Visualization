@@ -9,6 +9,8 @@ class Window(tk.Frame):
         buttonFrame = tk.Frame(self)
         buttonFrame.pack()
 
+
+        # OptionMenus (Drop-down Menus)
         self.colorSelectorVar = StringVar()
         self.colorSelectorVar.set("Green")
         self.colorSelector = OptionMenu(buttonFrame, self.colorSelectorVar, "Green", "Yellow", "Purple", "Orange", "Blue", "Red")
@@ -20,6 +22,23 @@ class Window(tk.Frame):
         self.algoSelector = OptionMenu(buttonFrame, self.algoSelectorVar, "Insertion", "Selection", "Bubble", "Quick Sort", "Heap")
         self.algoSelector.pack(side=tk.LEFT)
         self.algoSelector.config(bg="#add8e6", activebackground="#6fbbd3", highlightbackground="white")
+
+        # Labels and User Entry
+        label = tk.Label(buttonFrame, text="Number of Values:")
+        label.config(bg="white")
+        label.pack(side=tk.LEFT)
+
+        self.valueLength = tk.Entry(buttonFrame, width=3)
+        self.valueLength.insert(0, '25')
+        self.valueLength.pack(side=tk.LEFT)
+
+        label = tk.Label(buttonFrame, text="Update Speed (ms):")
+        label.pack(side=tk.LEFT)
+        label.config(bg="white")
+
+        self.speed = tk.Entry(buttonFrame, width=2)
+        self.speed.insert(0, '5')
+        self.speed.pack(side=tk.LEFT)
 
 
 
