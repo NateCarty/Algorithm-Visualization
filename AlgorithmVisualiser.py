@@ -192,6 +192,38 @@ class Window(tk.Frame):
         self.running = not self.running
     # funtion when reset button is pressed
     def on_reset(self):
+
+        # clear all values and animation
+        self.axis.cla()
+        self.intArray.reset()
+        self.animation = None
+
+        # get settings values
+        self.elementNumber = int(self.valueLength.get())
+        self.currentAlgorithm = self.algoSelectorVar.get()
+        self.currentColor = self.colorSelectorVar.get()
+
+        # recreate random data and intArray
+        intArray = np.round(np.linspace(4, 1000, self.elementNumber))
+        
+        np.random.shuffle(intArray)
+
+        self.intArray = ArrayTracker(intArray)
+
+        # recreate bar chart
+        self.rectangles = self.axis.bar(np.arange(0, self.elementNumber, 1), self.intArray, align = "edge", width = .8)
+        self.axis.set_xlim([0, self.elementNumber])
+        self.axis.set(title = f"{self.currentAlgorithm}")
+        self.axis.set_xticks([])
+
+        for rectangle in self.rectangles.patches:
+            rectangle.set_color("#%02x%02x%02x" % self.element_to_rgb(rectangle.get_height(), self.getRGB()))
+
+        # redraw canvas
+        self.canvas.draw()
+        self.running = False
+        self.button.config(text = "Start")
+
         return
 
     # function called when start is pressed and there is no current animation
